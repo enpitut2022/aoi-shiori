@@ -65,10 +65,7 @@ function App() {
       {results.map((item) => (
         <div key={item.key} {...item.events}>
           <p>{item.value.name}</p>
-          <img
-            src={item.value.imgUrl}
-            alt="ソート可能な画像"
-          />
+          <img src={item.value.imgUrl} alt="ソート可能な画像" />
         </div>
       ))}
     </div>

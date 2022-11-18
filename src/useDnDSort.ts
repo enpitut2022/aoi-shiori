@@ -32,6 +32,24 @@ interface DnDRef<T> {
   dragElement: DnDItem<T> | null; // ドラッグしてる要素
 }
 
+// マウスポインターが要素と被っているか判定します
+const isHover = (event: MouseEvent, element: HTMLElement): boolean => {
+  // マウスポインターの座標を取得
+  const clientX = event.clientX;
+  const clientY = event.clientY;
+
+  // 重なりを判定する要素のサイズと座標を取得
+  const rect = element.getBoundingClientRect();
+
+  // マウスポインターが要素と重なっているかを判定する
+  return (
+    clientY < rect.bottom &&
+    clientY > rect.top &&
+    clientX < rect.right &&
+    clientX > rect.left
+  );
+};
+
 export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
   // 描画内容と紐づいているのでuseStateで管理する
   const [items, setItems] = useState(defaultItems);
@@ -69,7 +87,7 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
 
   const onMouseMove = (event: MouseEvent) => {
     const { clientX, clientY } = event;
-    const { dragElement, pointerPosition } = state;
+    const { dndItems, dragElement, pointerPosition } = state; // dndItemsを追加
 
     // ドラッグして無ければ何もしない
     if (!dragElement) return;
@@ -84,6 +102,28 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
     dragStyle.zIndex = "100";
     dragStyle.cursor = "grabbing";
     dragStyle.transform = `translate(${x}px,${y}px)`;
+
+    // まだ確認できない場合は処理を終了する
+    if (!state.canCheckHovered) return;
+
+    // 確認できないようにする
+    state.canCheckHovered = false;
+
+    // 300ms後に確認できるようにする
+    setTimeout(() => (state.canCheckHovered = true), 300);
+
+    // ドラッグしている要素の配列の位置を取得
+    const dragIndex = dndItems.findIndex(({ key }) => key === dragElement.key);
+
+    // ホバーされている要素の配列の位置を取得
+    const hoveredIndex = dndItems.findIndex(
+      ({ element }, index) => index !== dragIndex && isHover(event, element)
+    );
+
+    if (hoveredIndex !== -1) {
+      // ホバーしていればコンソール画面に"Hello World!"を表示
+      console.log("Hello World!");
+    }
   };
 
   return items.map((value: T): DnDSortResult<T> => {
@@ -96,7 +136,28 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
       value,
       key,
       events: {
-        ref: () => void 0,
+        ref: (element: HTMLElement | null) => {
+          if (!element) return;
+
+          const { dndItems } = state;
+
+          // 位置をリセットする
+          element.style.transform = "";
+
+          // 要素の位置を取得
+          const { left: x, top: y } = element.getBoundingClientRect();
+          const position: Position = { x, y };
+
+          const itemIndex = dndItems.findIndex((item) => item.key === key);
+
+          // 要素が無ければ新しく追加して処理を終わる
+          if (itemIndex === -1) {
+            return dndItems.push({ key, value, element, position });
+          }
+
+          // 要素を更新する
+          state.dndItems[itemIndex] = { key, value, element, position };
+        },
         onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
           // ドラッグする要素(DOM)
           const element = event.currentTarget;
