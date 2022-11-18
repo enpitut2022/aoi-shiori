@@ -45,6 +45,47 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
     pointerPosition: { x: 0, y: 0 },
   }).current;
 
+  // ドラッグが終了した時の処理
+  const onMouseUp = (event: MouseEvent) => {
+    const { dragElement } = state;
+
+    // ドラッグしていなかったら何もしない
+    if (!dragElement) return;
+
+    const dragStyle = dragElement.element.style;
+
+    // ドラッグしてる要素に適用していたCSSを削除
+    dragStyle.zIndex = "";
+    dragStyle.cursor = "";
+    dragStyle.transform = "";
+
+    // ドラッグしている要素をstateから削除
+    state.dragElement = null;
+
+    // windowに登録していたイベントを削除
+    window.removeEventListener("mouseup", onMouseUp);
+    window.removeEventListener("mousemove", onMouseMove);
+  };
+
+  const onMouseMove = (event: MouseEvent) => {
+    const { clientX, clientY } = event;
+    const { dragElement, pointerPosition } = state;
+
+    // ドラッグして無ければ何もしない
+    if (!dragElement) return;
+
+    // マウスポインターの移動量を計算
+    const x = clientX - pointerPosition.x;
+    const y = clientY - pointerPosition.y;
+
+    const dragStyle = dragElement.element.style;
+
+    // ドラッグ要素の座標とスタイルを更新
+    dragStyle.zIndex = "100";
+    dragStyle.cursor = "grabbing";
+    dragStyle.transform = `translate(${x}px,${y}px)`;
+  };
+
   return items.map((value: T): DnDSortResult<T> => {
     // keyが無ければ新しく作り、あれば既存のkey文字列を返す
     const key = state.keys.get(value) || Math.random().toString(16);
@@ -56,7 +97,29 @@ export const useDnDSort = <T>(defaultItems: T[]): DnDSortResult<T>[] => {
       key,
       events: {
         ref: () => void 0,
-        onMouseDown: () => void 0,
+        onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
+          // ドラッグする要素(DOM)
+          const element = event.currentTarget;
+
+          // マウスポインターの座標を保持しておく
+          state.pointerPosition.x = event.clientX;
+          state.pointerPosition.y = event.clientY;
+
+          // ドラッグしている要素のスタイルを上書き
+          element.style.transition = ""; // アニメーションを無効にする
+          element.style.cursor = "grabbing"; // カーソルのデザインを変更
+
+          // 要素の座標を取得
+          const { left: x, top: y } = element.getBoundingClientRect();
+          const position: Position = { x, y };
+
+          // ドラッグする要素を保持しておく
+          state.dragElement = { key, value, element, position };
+
+          // mousemove, mouseupイベントをwindowに登録する
+          window.addEventListener("mouseup", onMouseUp);
+          window.addEventListener("mousemove", onMouseMove);
+        },
       },
     };
   });
