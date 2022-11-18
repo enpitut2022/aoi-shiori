@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import { useDnDSort } from "./useDnDSort";
 
 interface Result {
   // key propsに設定する文字列
@@ -56,15 +57,19 @@ function App() {
     },
   ];
 
-  const results: any = data;
+  const results = useDnDSort(data);
 
   return (
     <div>
       {/* 配列の要素を表示する */}
-      {results.map((item: any) => (
+      {results.map((item) => (
         <div>
-          <p>{item.name}</p>
-          <img src={item.imgUrl} alt="ソート可能な画像" {...item.events} />
+          <p>{item.value.name}</p>
+          <img
+            src={item.value.imgUrl}
+            alt="ソート可能な画像"
+            {...item.events}
+          />
         </div>
       ))}
     </div>
