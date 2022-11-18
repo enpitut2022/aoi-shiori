@@ -71,4 +71,5 @@ button:focus-visible {
 
 img {
   width: 300px;
+  pointer-events: none;
 }
