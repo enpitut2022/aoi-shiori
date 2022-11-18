@@ -63,7 +63,7 @@ function App() {
     <div>
       {/* 配列の要素を表示する */}
       {results.map((item) => (
-        <div>
+        <div key={item.key}>
           <p>{item.value.name}</p>
           <img
             src={item.value.imgUrl}
