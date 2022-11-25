@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { useDnDSort } from "./useDnDSort";
 import { Spot, data } from "./data";
+import interact from 'interactjs'
 
 interface Result {
   // key propsに設定する文字列
@@ -19,22 +20,55 @@ function App() {
   const results = useDnDSort(data);
   const adds = useDnDSort(data);
 
+  console.log("main.js!!");
+
+  // Drag
+  interact(".drag").draggable({
+    onstart(e) {
+      if (!e.target.posX) e.target.posX = 0;
+      if (!e.target.posY) e.target.posY = 0;
+      e.target.style.backgroundColor = "royalblue";
+    },
+    onmove(e) {
+      e.target.posX += e.dx;
+      e.target.posY += e.dy;
+      e.target.style.transform = `translate(${e.target.posX}px, ${e.target.posY}px)`;
+    },
+  });
+
+  // Drop
+  interact(".drop")
+    .dropzone({
+      ondrop(e) {
+        //console.log(e.target, e.relatedTarget);
+        const dragQuiz = e.relatedTarget.getAttribute("quiz");
+        const dropQuiz = e.target.getAttribute("quiz");
+        if (dragQuiz == dropQuiz) {
+          console.log("あたり!!");
+          e.relatedTarget.style.backgroundColor = "orange";
+        }
+      },
+    })
+    .on("dropactivate", function (e) {
+      e.target.classList.add("drop-activated");
+    });
+
   return (
     <div className="column">
-      <div>
+      <div className="drop">
         <p>なう</p>
         {results.map((item) => (
-          <div key={item.key} {...item.events}>
+          <div className="drag" key={item.key} {...item.events}>
             <p>{item.value.name}</p>
             <img src={item.value.imgUrl} alt="ソート可能な画像" />
           </div>
         ))}
       </div>
       {/* 配列の要素を表示する */}
-      <div>
+      <div className="drop">
         <p>追加候補</p>
         {adds.map((item) => (
-          <div key={item.key} {...item.events}>
+          <div className="drag" key={item.key} {...item.events}>
             <p>{item.value.name}</p>
             <img src={item.value.imgUrl} alt="ソート可能な画像" />
           </div>
