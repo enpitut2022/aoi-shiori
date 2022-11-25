@@ -17,16 +17,29 @@ interface Result {
 
 function App() {
   const results = useDnDSort(data);
+  const adds = useDnDSort(data);
 
   return (
-    <div>
+    <div className="column">
+      <div>
+        <p>なう</p>
+        {results.map((item) => (
+          <div key={item.key} {...item.events}>
+            <p>{item.value.name}</p>
+            <img src={item.value.imgUrl} alt="ソート可能な画像" />
+          </div>
+        ))}
+      </div>
       {/* 配列の要素を表示する */}
-      {results.map((item) => (
-        <div key={item.key} {...item.events}>
-          <p>{item.value.name}</p>
-          <img src={item.value.imgUrl} alt="ソート可能な画像" />
-        </div>
-      ))}
+      <div>
+        <p>追加候補</p>
+        {adds.map((item) => (
+          <div key={item.key} {...item.events}>
+            <p>{item.value.name}</p>
+            <img src={item.value.imgUrl} alt="ソート可能な画像" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
