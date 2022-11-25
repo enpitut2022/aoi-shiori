@@ -17,8 +17,10 @@ interface Result {
 }
 
 function App() {
-  const results = useDnDSort(data);
-  const adds = useDnDSort(data);
+  // const results = useDnDSort(data);
+  // const adds = useDnDSort(data);
+  const results = data;
+  const adds = data;
 
   console.log("main.js!!");
 
@@ -43,7 +45,7 @@ function App() {
         //console.log(e.target, e.relatedTarget);
         const dragQuiz = e.relatedTarget.getAttribute("quiz");
         const dropQuiz = e.target.getAttribute("quiz");
-        if (dragQuiz == dropQuiz) {
+        if (true) {
           console.log("あたり!!");
           e.relatedTarget.style.backgroundColor = "orange";
         }
@@ -56,11 +58,11 @@ function App() {
   return (
     <div className="column">
       <div className="drop">
-        <p>なう</p>
+        <p>旅行の予定</p>
         {results.map((item) => (
           <div className="drag" key={item.key} {...item.events}>
-            <p>{item.value.name}</p>
-            <img src={item.value.imgUrl} alt="ソート可能な画像" />
+            <p>{item.name}</p>
+            <img src={item.imgUrl} alt="ソート可能な画像" />
           </div>
         ))}
       </div>
@@ -69,8 +71,8 @@ function App() {
         <p>追加候補</p>
         {adds.map((item) => (
           <div className="drag" key={item.key} {...item.events}>
-            <p>{item.value.name}</p>
-            <img src={item.value.imgUrl} alt="ソート可能な画像" />
+            <p>{item.name}</p>
+            <img src={item.imgUrl} alt="ソート可能な画像" />
           </div>
         ))}
       </div>
