@@ -20,13 +20,24 @@ function App() {
 
   return (
     <div>
-      {/* 配列の要素を表示する */}
-      {results.map((item) => (
-        <div key={item.key} {...item.events}>
-          <p>{item.value.name}</p>
-          <img src={item.value.imgUrl} alt="ソート可能な画像" />
+      <p>ドラッグ&ドロップで順番を入れ替えられます！</p>
+      <div className="column">
+        <div className="timeLine">
+          <div>朝</div>
+          <div>昼</div>
+          <div>夜</div>
         </div>
-      ))}
+        <div>
+          <p>1日目</p>
+          {/* 配列の要素を表示する */}
+          {results.map((item) => (
+          <div  className="card" key={item.key} {...item.events}>
+            <p>{item.value.name}</p>
+            <img src={item.value.imgUrl} alt="ソート可能な画像" />
+          </div>
+        ))}
+        </div>
+      </div>
     </div>
   );
 }
