@@ -1,6 +1,4 @@
-import { useState } from "react";
 import "./App.css";
-import { useDnDSort } from "./useDnDSort";
 import { Spot, data } from "./data";
 import interact from 'interactjs'
 
@@ -17,19 +15,15 @@ interface Result {
 }
 
 function App() {
-  // const results = useDnDSort(data);
-  // const adds = useDnDSort(data);
   const results = data;
   const adds = data;
 
-  console.log("main.js!!");
 
   // Drag
   interact(".drag").draggable({
     onstart(e) {
       if (!e.target.posX) e.target.posX = 0;
       if (!e.target.posY) e.target.posY = 0;
-      e.target.style.backgroundColor = "royalblue";
     },
     onmove(e) {
       e.target.posX += e.dx;
@@ -42,12 +36,10 @@ function App() {
   interact(".drop")
     .dropzone({
       ondrop(e) {
-        //console.log(e.target, e.relatedTarget);
         const dragQuiz = e.relatedTarget.getAttribute("quiz");
         const dropQuiz = e.target.getAttribute("quiz");
         if (true) {
-          console.log("あたり!!");
-          e.relatedTarget.style.backgroundColor = "orange";
+          // console.log("あたり!!");
         }
       },
     })
@@ -60,7 +52,7 @@ function App() {
       <div className="drop">
         <p>旅行の予定</p>
         {results.map((item) => (
-          <div className="drag" key={item.key} {...item.events}>
+          <div className="drag">
             <p>{item.name}</p>
             <img src={item.imgUrl} alt="ソート可能な画像" />
           </div>
@@ -70,7 +62,7 @@ function App() {
       <div className="drop">
         <p>追加候補</p>
         {adds.map((item) => (
-          <div className="drag" key={item.key} {...item.events}>
+          <div className="drag">
             <p>{item.name}</p>
             <img src={item.imgUrl} alt="ソート可能な画像" />
           </div>
