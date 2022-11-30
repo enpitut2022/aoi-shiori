@@ -15,7 +15,6 @@ const cardColors = [
   "gainsboro",
   "ghostwhite",
   "ivory",
-  "khaki",
 ];
 const pickColor = () => {
   let rand = Math.floor(Math.random() * 10);
@@ -35,15 +34,16 @@ class Cards extends Component {
         props: {
           orientation: "horizontal",
         },
-        children: generateItems(columnNames.length, (i) => ({
+        children: generateItems(0, columnNames.length, (i) => ({
           id: `column${i}`,
           type: "container",
           name: columnNames[i],
           props: {
             orientation: "vertical",
             className: "card-container",
+            style: {backgroundColor: 'khaki', margin: '5px 10px', padding: '5px 20px', borderRadius: '5px'},
           },
-          children: generateItems(data.length, (j) => ({
+          children: generateItems(Math.floor(data.length/columnNames.length)*i, Math.floor(data.length/columnNames.length)*(i+1), (j) => ({
             type: "draggable",
             id: `${i}${j}`,
             props: {
