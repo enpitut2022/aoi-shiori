@@ -3,6 +3,7 @@ import "./App.css";
 import { useDnDSort } from "./useDnDSort";
 import { Spot, data } from "./data";
 import { Container, Draggable } from "react-smooth-dnd";
+//@ts-ignore
 import Cards from "./cards";
 
 interface Result {
