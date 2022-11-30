@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Container, Draggable } from "react-smooth-dnd";
 import { applyDrag, generateItems } from "./utils";
+import { data } from "./data";
 
-const lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`;
-
-const columnNames = ["Lorem", "Ipsum", "Consectetur", "Eiusmod"];
+const columnNames = ["1日目", "追加候補", "保留"];
 
 const cardColors = [
   "azure",
@@ -28,7 +25,7 @@ const pickColor = () => {
 class Cards extends Component {
   constructor() {
     super();
-
+    console.log(data)
     this.onColumnDrop = this.onColumnDrop.bind(this);
     this.onCardDrop = this.onCardDrop.bind(this);
     this.getCardPayload = this.getCardPayload.bind(this);
@@ -38,7 +35,7 @@ class Cards extends Component {
         props: {
           orientation: "horizontal",
         },
-        children: generateItems(4, (i) => ({
+        children: generateItems(columnNames.length, (i) => ({
           id: `column${i}`,
           type: "container",
           name: columnNames[i],
@@ -46,14 +43,14 @@ class Cards extends Component {
             orientation: "vertical",
             className: "card-container",
           },
-          children: generateItems(+(Math.random() * 10).toFixed() + 5, (j) => ({
+          children: generateItems(data.length, (j) => ({
             type: "draggable",
             id: `${i}${j}`,
             props: {
               className: "card",
-              style: { backgroundColor: pickColor() },
+              style: { backgroundColor: pickColor(), color: 'black' },
             },
-            data: lorem.slice(0, Math.floor(Math.random() * 150) + 30),
+            data: data[j],
           })),
         })),
       },
@@ -110,7 +107,8 @@ class Cards extends Component {
                       return (
                         <Draggable key={card.id}>
                           <div {...card.props}>
-                            <p>{card.data}</p>
+                            <p>{card.data.name}</p>
+                            <img src={card.data.imgUrl} alt="" />
                           </div>
                         </Draggable>
                       );

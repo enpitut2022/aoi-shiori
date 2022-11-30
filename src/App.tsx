@@ -43,15 +43,8 @@ function App() {
     </div>
   );
 
-  const foo = ["foo", "bar", "baz"];
-
   return (
     <div>
-      <Container>
-        {foo.map((val, i) => {
-          return <Draggable key={i}>{val}</Draggable>;
-        })}
-      </Container>
       <Cards />
     </div>
   );
