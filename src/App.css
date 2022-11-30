@@ -39,3 +39,20 @@
 .read-the-docs {
   color: #888;
 }
+
+.card {
+  border: black 1px solid;
+  border-radius: 5px;
+  margin: 10px 0;
+  background-color: white;
+}
+
+.column {
+  display: flex;
+}
+
+.timeLine {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
