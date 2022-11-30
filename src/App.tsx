@@ -2,6 +2,9 @@ import { useState } from "react";
 import "./App.css";
 import { useDnDSort } from "./useDnDSort";
 import { Spot, data } from "./data";
+import { Container, Draggable } from "react-smooth-dnd";
+//@ts-ignore
+import Cards from "./cards";
 
 interface Result {
   // key propsに設定する文字列
@@ -18,7 +21,7 @@ interface Result {
 function App() {
   const results = useDnDSort(data);
 
-  return (
+  const hoge = (
     <div>
       <p>ドラッグ&ドロップで順番を入れ替えられます！</p>
       <div className="column">
@@ -31,13 +34,19 @@ function App() {
           <p>1日目</p>
           {/* 配列の要素を表示する */}
           {results.map((item) => (
-          <div  className="card" key={item.key} {...item.events}>
-            <p>{item.value.name}</p>
-            <img src={item.value.imgUrl} alt="ソート可能な画像" />
-          </div>
-        ))}
+            <div className="card" key={item.key} {...item.events}>
+              <p>{item.value.name}</p>
+              <img src={item.value.imgUrl} alt="ソート可能な画像" />
+            </div>
+          ))}
         </div>
       </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <Cards />
     </div>
   );
 }
