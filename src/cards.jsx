@@ -119,6 +119,9 @@ class Cards extends Component {
                             <p>{card.data.name}</p>
                             <img src={card.data.imgUrl} alt="" />
                           </div>
+                          <div>
+                            距離
+                          </div>
                         </Draggable>
                       );
                     })}
