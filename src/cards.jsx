@@ -5,22 +5,6 @@ import { data } from "./data";
 
 const columnNames = ["1日目", "追加候補", "保留"];
 
-const cardColors = [
-  "azure",
-  "beige",
-  "bisque",
-  "blanchedalmond",
-  "burlywood",
-  "cornsilk",
-  "gainsboro",
-  "ghostwhite",
-  "ivory",
-];
-const pickColor = () => {
-  let rand = Math.floor(Math.random() * 10);
-  return cardColors[rand];
-};
-
 class Cards extends Component {
   constructor() {
     super();
@@ -56,7 +40,7 @@ class Cards extends Component {
               id: `${i}${j}`,
               props: {
                 className: "card",
-                style: { backgroundColor: pickColor(), color: "black" },
+                style: { color: "black" },
               },
               data: data[j],
             })
