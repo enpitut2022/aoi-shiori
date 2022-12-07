@@ -90,21 +90,12 @@ class Cards extends Component {
                   <Container
                     {...column.props}
                     groupName="col"
-                    onDragStart={(e) => console.log("drag started", e)}
-                    onDragEnd={(e) => console.log("drag end", e)}
                     onDrop={(e) => this.onCardDrop(column.id, e)}
                     getChildPayload={(index) =>
                       this.getCardPayload(column.id, index)
                     }
                     dragClass="card-ghost"
                     dropClass="card-ghost-drop"
-                    onDragEnter={() => {
-                      console.log("drag enter:", column.id);
-                    }}
-                    onDragLeave={() => {
-                      console.log("drag leave:", column.id);
-                    }}
-                    onDropReady={(p) => console.log("Drop ready: ", p)}
                     dropPlaceholder={{
                       animationDuration: 150,
                       showOnTop: true,
