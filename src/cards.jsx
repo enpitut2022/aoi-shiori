@@ -24,7 +24,7 @@ const pickColor = () => {
 class Cards extends Component {
   constructor() {
     super();
-    console.log(data)
+    console.log(data);
     this.onColumnDrop = this.onColumnDrop.bind(this);
     this.onCardDrop = this.onCardDrop.bind(this);
     this.getCardPayload = this.getCardPayload.bind(this);
@@ -41,17 +41,26 @@ class Cards extends Component {
           props: {
             orientation: "vertical",
             className: "card-container",
-            style: {backgroundColor: 'khaki', margin: '5px 10px', padding: '5px 20px', borderRadius: '5px'},
-          },
-          children: generateItems(Math.floor(data.length/columnNames.length)*i, Math.floor(data.length/columnNames.length)*(i+1), (j) => ({
-            type: "draggable",
-            id: `${i}${j}`,
-            props: {
-              className: "card",
-              style: { backgroundColor: pickColor(), color: 'black' },
+            style: {
+              backgroundColor: "khaki",
+              margin: "5px 10px",
+              padding: "5px 20px",
+              borderRadius: "5px",
             },
-            data: data[j],
-          })),
+          },
+          children: generateItems(
+            Math.floor(data.length / columnNames.length) * i,
+            Math.floor(data.length / columnNames.length) * (i + 1),
+            (j) => ({
+              type: "draggable",
+              id: `${i}${j}`,
+              props: {
+                className: "card",
+                style: { backgroundColor: pickColor(), color: "black" },
+              },
+              data: data[j],
+            })
+          ),
         })),
       },
     };
