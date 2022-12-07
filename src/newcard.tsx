@@ -20,7 +20,7 @@ const newCard = () => {
 
   return (
     <>
-      <div>
+      <div className="simple-page-scroller">
         <Container onDrop={onDropHandler}>
           {spots.map(spot => (
             <Draggable key={spot.id}>
