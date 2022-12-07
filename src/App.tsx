@@ -5,6 +5,7 @@ import { Spot, data } from "./data";
 import { Container, Draggable } from "react-smooth-dnd";
 //@ts-ignore
 import Cards from "./cards";
+import NewCard from "./newcard";
 
 interface Result {
   // key propsに設定する文字列
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <div>
+      <NewCard />
       <Cards />
     </div>
   );
