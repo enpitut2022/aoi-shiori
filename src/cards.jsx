@@ -3,7 +3,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag, generateItems, newArray, updateDistance } from './utils';
 import { data } from './data';
 
-const columnNames = ['1日目', '追加候補', '保留'];
+const columnNames = ['1日目', '追加候補'];
 
 const cardColors = [
 	'azure',
