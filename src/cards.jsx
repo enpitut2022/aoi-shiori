@@ -38,7 +38,7 @@ class Cards extends Component {
 					type: 'container',
 					name: columnNames[i],
 					props: {
-						orientation: 'vertical',
+						orientation: 'horizontal',
 						className: 'card-container',
 						style: {
 							backgroundColor: 'khaki',
@@ -112,7 +112,7 @@ class Cards extends Component {
 										}}
 										dropPlaceholderAnimationDuration={200}
 									>
-										<div  style={{"display":"flex"}}>
+										{/* <div  style={{"display":"flex"}}> */}
 										{column.children.map((card, i) => {
 											return (
 												<Draggable key={card.id}>
@@ -126,7 +126,7 @@ class Cards extends Component {
 												</Draggable>
 											);
 										})}
-										</div>
+										{/* </div> */}
 									</Container>
 								</div>
 							</Draggable>
