@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag, generateItems, newArray, updateDistance } from './utils';
 import { data } from './data';
+import SpotCard from './spotCard';
+import DistanceBlock from './distanceBlock';
 
 const columnNames = ['1日目', '追加候補'];
 
@@ -84,9 +86,7 @@ class Cards extends Component {
 						return (
 							<Draggable key={column.id}>
 								<div className={column.props.className}>
-									<div className="card-column-header">
-										{column.name}
-									</div>
+									<div className="card-column-header">{column.name}</div>
 									<Container
 										{...column.props}
 										groupName="col"
@@ -114,15 +114,16 @@ class Cards extends Component {
 									>
 										{column.children.map((card, i) => {
 											return (
-												<Draggable key={card.id}>
-													<div {...card.props}>
-														<p>{card.data.name}</p>
-														<img src={card.data.imgUrl} alt="" />
-													</div>
-													<div style={{ color: 'black' }}>
-														<p>{this.state.distance[i]}</p>
-													</div>
-												</Draggable>
+												<>
+													<Draggable key={card.id}>
+														<SpotCard {...card} />
+													</Draggable>
+                          {
+                            column.name === '1日目'
+                            ? <DistanceBlock distance={this.state.distance[i]} />
+                            :<></>
+                          }
+												</>
 											);
 										})}
 									</Container>

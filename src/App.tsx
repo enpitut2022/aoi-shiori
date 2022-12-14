@@ -19,7 +19,6 @@ interface Result {
 }
 
 function App() {
-
   return (
     <div>
       <Cards />
