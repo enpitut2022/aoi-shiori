@@ -71,7 +71,7 @@ class Cards extends Component {
 		return (
 			<div className="card-scene">
 				<Container
-					orientation="horizontal"
+					orientation="vertical"
 					onDrop={this.onColumnDrop}
 					dragHandleSelector=".column-drag-handle"
 					dropPlaceholder={{
