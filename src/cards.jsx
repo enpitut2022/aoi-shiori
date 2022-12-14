@@ -85,7 +85,6 @@ class Cards extends Component {
 							<Draggable key={column.id}>
 								<div className={column.props.className}>
 									<div className="card-column-header">
-										<span className="column-drag-handle">&#x2630;</span>
 										{column.name}
 									</div>
 									<Container
@@ -113,6 +112,7 @@ class Cards extends Component {
 										}}
 										dropPlaceholderAnimationDuration={200}
 									>
+										<div  style={{"display":"flex"}}>
 										{column.children.map((card, i) => {
 											return (
 												<Draggable key={card.id}>
@@ -126,6 +126,7 @@ class Cards extends Component {
 												</Draggable>
 											);
 										})}
+										</div>
 									</Container>
 								</div>
 							</Draggable>
