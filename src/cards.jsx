@@ -3,7 +3,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag, generateItems, newArray, updateDistance } from './utils';
 import { data } from './data';
 
-const columnNames = ['1日目', '追加候補', '保留'];
+const columnNames = ['1日目', '追加候補'];
 
 const cardColors = [
 	'azure',
@@ -38,7 +38,7 @@ class Cards extends Component {
 					type: 'container',
 					name: columnNames[i],
 					props: {
-						orientation: 'vertical',
+						orientation: 'horizontal',
 						className: 'card-container',
 						style: {
 							backgroundColor: 'khaki',
@@ -71,7 +71,7 @@ class Cards extends Component {
 		return (
 			<div className="card-scene">
 				<Container
-					orientation="horizontal"
+					orientation="vertical"
 					onDrop={this.onColumnDrop}
 					dragHandleSelector=".column-drag-handle"
 					dropPlaceholder={{
@@ -85,7 +85,6 @@ class Cards extends Component {
 							<Draggable key={column.id}>
 								<div className={column.props.className}>
 									<div className="card-column-header">
-										<span className="column-drag-handle">&#x2630;</span>
 										{column.name}
 									</div>
 									<Container
