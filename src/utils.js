@@ -59,7 +59,8 @@ export const updateDistance = (spots) => {
       spots[i + 1].data.lat,
       spots[i + 1].data.lng
     );
-    res.push(`距離 ${dis}km`);
+    const formattedDistance = Math.round(dis);
+    res.push(`距離 ${formattedDistance}km`);
   }
   return res;
 };
