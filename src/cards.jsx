@@ -3,6 +3,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { applyDrag, generateItems, newArray, updateDistance } from './utils';
 import { data } from './data';
 import SpotCard from './spotCard';
+import DistanceBlock from './distanceBlock';
 
 const columnNames = ['1日目', '追加候補'];
 
@@ -117,9 +118,7 @@ class Cards extends Component {
 													<Draggable key={card.id}>
 														<SpotCard {...card} />
 													</Draggable>
-													<div style={{ color: 'black' }}>
-														<p>{this.state.distance[i]}</p>
-													</div>
+                          <DistanceBlock distance={this.state.distance[i]} />
 												</>
 											);
 										})}
