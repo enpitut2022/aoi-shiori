@@ -33,7 +33,10 @@ const SpotCards = () => {
   return (
     <>
       <div>
-        <Container onDrop={onDropHandler}>
+        <Container
+          orientation="horizontal"
+          onDrop={onDropHandler}
+        >
           {spots.map(spot => (
             <Draggable key={spot.id}>
               <SpotCard {...spot} />
