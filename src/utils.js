@@ -51,7 +51,12 @@ const calcDistance = (lat1, lng1, lat2, lng2) => {
 const calcWalkTime = (dis) => {
   const walkHour = Math.floor(dis / 4);
   const walkMinutes = Math.ceil(60 * ((dis / 4) - walkHour));
-  const walkTime = [walkHour, walkMinutes];
+  let walkTime = '';
+  if (walkHour == 0) {
+    walkTime = String(walkMinutes) + '分';
+  } else {
+    walkTime = String(walkHour) + '時間' + String(walkMinutes) + '分'
+  };
   return (walkTime);
 };
 
@@ -69,10 +74,10 @@ export const updateDistance = (spots) => {
     const walkTime = calcWalkTime(dis);
     if(dis < 1){
       const formattedDistance = Math.round(dis * 1000);
-      res.push(`距離 ${formattedDistance}m\n徒歩 ${walkTime[0]}時間${walkTime[1]}分`);
+      res.push(`距離 ${formattedDistance}m\n徒歩 ${walkTime}`);
     } else {
       const formattedDistance = Math.round(dis);
-      res.push(`距離 ${formattedDistance}km\n徒歩 ${walkTime[0]}時間${walkTime[1]}分`);
+      res.push(`距離 ${formattedDistance}km\n徒歩 ${walkTime}`);
     }
   }
   return res;
