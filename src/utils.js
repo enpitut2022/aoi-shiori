@@ -48,6 +48,13 @@ const calcDistance = (lat1, lng1, lat2, lng2) => {
   );
 };
 
+const calcWalkTime = (dis) => {
+  const walkHour = Math.floor(dis / 4);
+  const walkMinutes = Math.ceil(60 * ((dis / 4) - walkHour));
+  const walkTime = [walkHour, walkMinutes];
+  return (walkTime);
+};
+
 export const updateDistance = (spots) => {
   console.log({ spots });
   const res = [];
@@ -59,13 +66,13 @@ export const updateDistance = (spots) => {
       spots[i + 1].data.lat,
       spots[i + 1].data.lng
     );
+    const walkTime = calcWalkTime(dis);
     if(dis < 1){
-      dis *= 100;
-      const formattedDistance = Math.round(dis);
-      res.push(`距離 ${formattedDistance}m`);
+      const formattedDistance = Math.round(dis * 1000);
+      res.push(`距離 ${formattedDistance}m\n徒歩 ${walkTime[0]}時間${walkTime[1]}分`);
     } else {
       const formattedDistance = Math.round(dis);
-      res.push(`距離 ${formattedDistance}km`);
+      res.push(`距離 ${formattedDistance}km\n徒歩 ${walkTime[0]}時間${walkTime[1]}分`);
     }
   }
   return res;
