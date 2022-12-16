@@ -15,18 +15,28 @@ const SpotCard = (props: Props) => {
   );
 };
 
+// const getCardPayload = (columnId: number, index: number) {
+//   return this.state.scene.children.filter((p) => p.id === columnId)[0]
+//     .children[index];
+// }
+
+type Data = {
+  spots: Spot[];
+  candidate: Spot[];
+};
+
 const SpotCards = () => {
-  const [spots, setSpots] = useState<Spot[]>(data);
+  const [datas, setDatas] = useState<Data>({ spots: data, candidate: [] });
 
   // ドロップされたときにspotの順番を更新する
   const onDropHandler = (e: DropResult) => {
-    setSpots((old): Spot[] => {
+    setDatas((old): Data => {
       if (e.removedIndex === null || e.addedIndex === null) return old;
 
-      const updated = old.concat([])  // 古いspotsを複製する
+      const updated = [...old.spots]  // 古いspotsを複製する
       updated.splice(e.removedIndex, 1);
-      updated.splice(e.addedIndex, 0, old[e.removedIndex]); // 追加された位置に挿入する
-      return updated;
+      updated.splice(e.addedIndex, 0, old.spots[e.removedIndex]); // 追加された位置に挿入する
+      return { spots: updated, candidate: [] };
     });
   }
 
@@ -37,7 +47,7 @@ const SpotCards = () => {
           orientation="horizontal"
           onDrop={onDropHandler}
         >
-          {spots.map(spot => (
+          {datas.spots.map(spot => (
             <Draggable key={spot.id}>
               <SpotCard {...spot} />
             </Draggable>
