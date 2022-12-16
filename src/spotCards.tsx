@@ -15,43 +15,92 @@ const SpotCard = (props: Props) => {
   );
 };
 
-// const getCardPayload = (columnId: number, index: number) {
-//   return this.state.scene.children.filter((p) => p.id === columnId)[0]
-//     .children[index];
-// }
-
 type Data = {
   spots: Spot[];
   candidate: Spot[];
 };
 
 const SpotCards = () => {
-  const [datas, setDatas] = useState<Data>({ spots: data, candidate: [] });
+  const [datas, setDatas] = useState<Data>({ spots: data, candidate: data });
 
   // ドロップされたときにspotの順番を更新する
-  const onDropHandler = (e: DropResult) => {
+  const onDropHandler = (columnName: string, e: DropResult) => {
+    console.log(e)
+
+    if (columnName === 'spots') {
+      setDatas((old): Data => {
+        if (e.removedIndex === null || e.addedIndex === null) return old;
+
+        const updated = [...old.spots]  // 古いspotsを複製する
+        updated.splice(e.removedIndex, 1);
+        updated.splice(e.addedIndex, 0, old.spots[e.removedIndex]); // 追加された位置に挿入する
+        return { spots: updated, candidate: old.candidate };
+      });
+
+      return;
+    }
+
     setDatas((old): Data => {
       if (e.removedIndex === null || e.addedIndex === null) return old;
 
-      const updated = [...old.spots]  // 古いspotsを複製する
+      const updated = [...old.candidate]  // 古いspotsを複製する
       updated.splice(e.removedIndex, 1);
-      updated.splice(e.addedIndex, 0, old.spots[e.removedIndex]); // 追加された位置に挿入する
-      return { spots: updated, candidate: [] };
+      updated.splice(e.addedIndex, 0, old.candidate[e.removedIndex]); // 追加された位置に挿入する
+      return { spots: old.spots, candidate: updated };
     });
+  }
+
+  const getCardPayload = (columnName: string, index: number): Spot => {
+    if (columnName === 'spots') {
+      return datas.spots[index]
+    }
+    return datas.candidate[index]
   }
 
   return (
     <>
       <div>
         <Container
-          orientation="horizontal"
-          onDrop={onDropHandler}
+          dragHandleSelector=".column-drag-handle"
+          onDrop={e => console.log('outer', e)}
         >
-          {datas.spots.map(spot => (
-            <Draggable key={spot.id}>
-              <SpotCard {...spot} />
-            </Draggable>
-          ))}
+          {/* 旅程を格納するボックス */}
+          <Draggable key="spots">
+            <div>
+              <Container
+                orientation="horizontal"
+                getChildPayload={(index) =>
+                  getCardPayload('spots', index)
+                }
+                onDrop={e => onDropHandler('spots', e)}
+              >
+                {datas.spots.map(spot => (
+                  <Draggable key={`spots:${spot.id}`}>
+                    <SpotCard {...spot} />
+                  </Draggable>
+                ))}
+              </Container>
+            </div>
+          </Draggable>
+
+          {/* 候補を格納するボックス */}
+          <Draggable key="candidate">
+            <div>
+              <Container
+                orientation="horizontal"
+                getChildPayload={(index) =>
+                  getCardPayload('candidate', index)
+                }
+                onDrop={e => onDropHandler('candidate', e)}
+              >
+                {datas.candidate.map(spot => (
+                  <Draggable key={`candidate:${spot.id}`}>
+                    <SpotCard {...spot} />
+                  </Draggable>
+                ))}
+              </Container>
+            </div>
+          </Draggable>
         </Container>
       </div>
     </>

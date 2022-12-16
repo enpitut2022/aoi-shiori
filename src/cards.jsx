@@ -118,11 +118,11 @@ class Cards extends Component {
 													<Draggable key={card.id}>
 														<SpotCard {...card} />
 													</Draggable>
-                          {
-                            column.name === '1日目'
-                            ? <DistanceBlock distance={this.state.distance[i]} />
-                            :<></>
-                          }
+													{column.name === '1日目' ? (
+														<DistanceBlock distance={this.state.distance[i]} />
+													) : (
+														<></>
+													)}
 												</>
 											);
 										})}
