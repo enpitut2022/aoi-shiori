@@ -7,6 +7,7 @@ const DistanceBlock = (props: Props) => {
   return (
     <>
       <div style={{ color: 'black' }}>
+        <p>➡️</p>
         <p>{props.distance}</p>
       </div>
     </>

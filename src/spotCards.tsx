@@ -24,7 +24,7 @@ type Data = {
 
 const SpotCards = () => {
   const [datas, setDatas] = useState<Data>({ spots: data.slice(0, 3), candidate: data.slice(3) });
-  const [distance, setDistance] = useState<string[]>(['徒歩5分', '徒歩5分', '徒歩5分',]);
+  const [distance, setDistance] = useState<string[]>(['徒歩5分', '徒歩5分']);
 
   const applyDrag = <T,>(arr: T[], dragResult: DropResult): T[] => {
     const { removedIndex, addedIndex, payload } = dragResult;
