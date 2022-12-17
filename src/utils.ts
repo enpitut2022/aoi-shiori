@@ -24,13 +24,9 @@ const calcDistance = (
 const calcWalkTime = (dis: number): string => {
 	const walkHour = Math.floor(dis / 4);
 	const walkMinutes = Math.ceil(60 * (dis / 4 - walkHour));
-	let walkTime = '';
-	if (walkHour == 0) {
-		walkTime = String(walkMinutes) + '分';
-	} else {
-		walkTime = String(walkHour) + '時間' + String(walkMinutes) + '分';
-	}
-	return walkTime;
+
+	if (walkHour === 0) return `${walkMinutes}分`;
+	return `${walkHour}時間${walkMinutes}分`;
 };
 
 export const updateDistance = (spots: Spot[]) => {
