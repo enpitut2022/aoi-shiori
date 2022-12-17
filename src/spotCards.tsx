@@ -23,38 +23,41 @@ type Data = {
 const SpotCards = () => {
   const [datas, setDatas] = useState<Data>({ spots: data, candidate: data });
 
-  // ドロップされたときにspotの順番を更新する
-  const onDropHandler = (columnName: string, e: DropResult) => {
-    console.log(e)
+  const applyDrag = <T,>(arr: T[], dragResult: DropResult): T[] => {
+    const { removedIndex, addedIndex, payload } = dragResult;
+    if (removedIndex === null && addedIndex === null) return arr;
 
-    if (columnName === 'spots') {
-      setDatas((old): Data => {
-        if (e.removedIndex === null || e.addedIndex === null) return old;
+    const result = [...arr];
+    let itemToAdd = payload;
 
-        const updated = [...old.spots]  // 古いspotsを複製する
-        updated.splice(e.removedIndex, 1);
-        updated.splice(e.addedIndex, 0, old.spots[e.removedIndex]); // 追加された位置に挿入する
-        return { spots: updated, candidate: old.candidate };
-      });
-
-      return;
+    if (removedIndex !== null) {
+      itemToAdd = result.splice(removedIndex, 1)[0];
     }
 
-    setDatas((old): Data => {
-      if (e.removedIndex === null || e.addedIndex === null) return old;
+    if (addedIndex !== null) {
+      result.splice(addedIndex, 0, itemToAdd);
+    }
 
-      const updated = [...old.candidate]  // 古いspotsを複製する
-      updated.splice(e.removedIndex, 1);
-      updated.splice(e.addedIndex, 0, old.candidate[e.removedIndex]); // 追加された位置に挿入する
-      return { spots: old.spots, candidate: updated };
-    });
+    return result;
+  };
+
+  // ドロップされたときにspotの順番を更新する
+  const onDropHandler = (columnName: string, e: DropResult) => {
+    if (columnName === 'spots') {
+      setDatas((old): Data => {
+        return { spots: applyDrag(old.spots, e), candidate: old.candidate };
+      });
+    }
+
+    if (columnName === 'candidate') {
+      setDatas((old): Data => {
+        return { spots: old.spots, candidate: applyDrag(old.candidate, e) };
+      });
+    }
   }
 
   const getCardPayload = (columnName: string, index: number): Spot => {
-    if (columnName === 'spots') {
-      return datas.spots[index]
-    }
-    return datas.candidate[index]
+    return columnName === 'spots' ? datas.spots[index] : datas.candidate[index];
   }
 
   return (
