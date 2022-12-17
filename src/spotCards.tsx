@@ -74,7 +74,7 @@ const SpotCards = () => {
             onDrop={e => onDropHandler('spots', e)}
           >
             {datas.spots.map(spot => (
-              <Draggable key={`spots:${spot.id}`}>
+              <Draggable key={Math.floor(Math.random() * 10000)}>
                 <SpotCard {...spot} />
               </Draggable>
             ))}
@@ -92,7 +92,7 @@ const SpotCards = () => {
             onDrop={e => onDropHandler('candidate', e)}
           >
             {datas.candidate.map(spot => (
-              <Draggable key={`candidate:${spot.id}`}>
+              <Draggable key={Math.floor(Math.random() * 10000)}>
                 <SpotCard {...spot} />
               </Draggable>
             ))}
