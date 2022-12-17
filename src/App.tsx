@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <SpotCards />
-      <Cards />
+      {/* <Cards /> */}
     </div>
   );
 }

@@ -60,48 +60,41 @@ const SpotCards = () => {
   return (
     <>
       <div>
-        <Container
-          dragHandleSelector=".column-drag-handle"
-          onDrop={e => console.log('outer', e)}
-        >
-          {/* 旅程を格納するボックス */}
-          <Draggable key="spots">
-            <div>
-              <Container
-                orientation="horizontal"
-                getChildPayload={(index) =>
-                  getCardPayload('spots', index)
-                }
-                onDrop={e => onDropHandler('spots', e)}
-              >
-                {datas.spots.map(spot => (
-                  <Draggable key={`spots:${spot.id}`}>
-                    <SpotCard {...spot} />
-                  </Draggable>
-                ))}
-              </Container>
-            </div>
-          </Draggable>
+        {/* 旅程を格納するボックス */}
+        <div>
+          <Container
+            groupName="shiori"
+            orientation="horizontal"
+            getChildPayload={(index) =>
+              getCardPayload('spots', index)
+            }
+            onDrop={e => onDropHandler('spots', e)}
+          >
+            {datas.spots.map(spot => (
+              <Draggable key={`spots:${spot.id}`}>
+                <SpotCard {...spot} />
+              </Draggable>
+            ))}
+          </Container>
+        </div>
 
-          {/* 候補を格納するボックス */}
-          <Draggable key="candidate">
-            <div>
-              <Container
-                orientation="horizontal"
-                getChildPayload={(index) =>
-                  getCardPayload('candidate', index)
-                }
-                onDrop={e => onDropHandler('candidate', e)}
-              >
-                {datas.candidate.map(spot => (
-                  <Draggable key={`candidate:${spot.id}`}>
-                    <SpotCard {...spot} />
-                  </Draggable>
-                ))}
-              </Container>
-            </div>
-          </Draggable>
-        </Container>
+        {/* 候補を格納するボックス */}
+        <div className="candidate">
+          <Container
+            groupName="shiori"
+            orientation="horizontal"
+            getChildPayload={(index) =>
+              getCardPayload('candidate', index)
+            }
+            onDrop={e => onDropHandler('candidate', e)}
+          >
+            {datas.candidate.map(spot => (
+              <Draggable key={`candidate:${spot.id}`}>
+                <SpotCard {...spot} />
+              </Draggable>
+            ))}
+          </Container>
+        </div>
       </div>
     </>
   )
