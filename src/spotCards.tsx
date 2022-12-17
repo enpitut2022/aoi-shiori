@@ -21,7 +21,7 @@ type Data = {
 };
 
 const SpotCards = () => {
-  const [datas, setDatas] = useState<Data>({ spots: data, candidate: data });
+  const [datas, setDatas] = useState<Data>({ spots: data.slice(0,3), candidate: data.slice(3) });
 
   const applyDrag = <T,>(arr: T[], dragResult: DropResult): T[] => {
     const { removedIndex, addedIndex, payload } = dragResult;
@@ -74,7 +74,7 @@ const SpotCards = () => {
             onDrop={e => onDropHandler('spots', e)}
           >
             {datas.spots.map(spot => (
-              <Draggable key={Math.floor(Math.random() * 10000)}>
+              <Draggable key={Math.floor(Math.random() * 99999)}>
                 <SpotCard {...spot} />
               </Draggable>
             ))}
@@ -92,7 +92,7 @@ const SpotCards = () => {
             onDrop={e => onDropHandler('candidate', e)}
           >
             {datas.candidate.map(spot => (
-              <Draggable key={Math.floor(Math.random() * 10000)}>
+              <Draggable key={Math.floor(Math.random() * 99999)}>
                 <SpotCard {...spot} />
               </Draggable>
             ))}

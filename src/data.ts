@@ -34,7 +34,7 @@ export const data: Spot[] = [
   {
     id: 3,
     name: "伏見稲荷大社",
-    imgUrl: "https://souda-kyoto.jp/blog/ea410e000000c9rx-img/2.jpg",
+    imgUrl: "https://cdn2.veltra.com/ptr/20210402060446_464634935_10622_0.jpg?imwidth=800&impolicy=custom",
     lat: 34.9679419,
     lng: 135.769796,
   },
