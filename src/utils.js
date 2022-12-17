@@ -65,12 +65,12 @@ export const updateDistance = (spots) => {
   console.log({ spots });
   const res = [];
   for (let i = 0; i < spots.length - 1; i++) {
-    console.log(spots[i].data, spots[i + 1].data);
+    // console.log(spots[i].data, spots[i + 1].data);
     const dis = calcDistance(
-      spots[i].data.lat,
-      spots[i].data.lng,
-      spots[i + 1].data.lat,
-      spots[i + 1].data.lng
+      spots[i].lat,
+      spots[i].lng,
+      spots[i + 1].lat,
+      spots[i + 1].lng
     );
     const walkTime = calcWalkTime(dis);
     if(dis < 1){

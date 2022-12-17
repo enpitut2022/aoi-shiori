@@ -1,6 +1,6 @@
 // ひつようかどうかわからないけど、スポット間の距離を表示するコンポーネント
 type Props = {
-  distance: number;
+  distance: string;
 };
 
 const DistanceBlock = (props: Props) => {
