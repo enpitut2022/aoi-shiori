@@ -11,6 +11,7 @@ const SpotCard = (props: Props) => {
     <>
       <div>
         <p>{props.name}</p>
+        <p>{props.spendTime}分</p>
         <img src={props.imgUrl} alt="" />
       </div>
     </>
