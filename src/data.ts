@@ -10,10 +10,10 @@ export type Spot = {
 export const isSpot = (x: unknown): x is Spot => {
   if (typeof (x as Spot).id !== "number") return false;
   if (typeof (x as Spot).name !== "string") return false;
-  if (typeof (x as Spot).imgUrl === "string") return false;
-  if (typeof (x as Spot).lat === "number") return false;
-  if (typeof (x as Spot).lng === "number") return false;
-  if (typeof (x as Spot).spendTime === "number") return false;
+  if (typeof (x as Spot).imgUrl !== "string") return false;
+  if (typeof (x as Spot).lat !== "number") return false;
+  if (typeof (x as Spot).lng !== "number") return false;
+  if (typeof (x as Spot).spendTime !== "number") return false;
 
   return true;
 };
