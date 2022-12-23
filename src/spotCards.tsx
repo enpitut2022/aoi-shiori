@@ -9,7 +9,7 @@ type Props = Spot;
 const SpotCard = (props: Props) => {
   return (
     <>
-      <div>
+      <div className="card">
         <p>{props.name}</p>
         <img src={props.imgUrl} alt="" />
       </div>
