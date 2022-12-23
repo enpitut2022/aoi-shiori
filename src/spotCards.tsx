@@ -54,20 +54,22 @@ const SpotCards = () => {
 
   // ドロップされたときにspotの順番を更新する
   const onDropHandler = (columnName: string, e: DropResult) => {
-    if (columnName === "spots") {
-      setDatas((old): Data => {
-        return {
-          spots: applyDrag(notUndefined(old.spots), e),
-          candidate: notUndefined(old.candidate),
-        };
-      });
-    }
-
     if (columnName === "candidate") {
       setDatas((old): Data => {
         return {
           spots: notUndefined(old.spots),
           candidate: applyDrag(notUndefined(old.candidate), e),
+        };
+      });
+    }
+
+    if (columnName === "spots") {
+      setDatas((old): Data => {
+        const newSpots = applyDrag(notUndefined(old.spots), e);
+
+        return {
+          spots: newSpots,
+          candidate: notUndefined(old.candidate),
         };
       });
     }
