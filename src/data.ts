@@ -62,4 +62,40 @@ export const data: Spot[] = [
     lng: 135.7981652,
     spendTime: 100,
   },
+  {
+    id: 6,
+    name: "東寺",
+    imgUrl:
+      "https://www.img-ikyu.com/contents/dg/special/kankou/area/kyoto/spo12.jpg?auto=compress,format&fit=crop&w=650&h=450&lossless=0",
+    lat: 34.9818573,
+    lng: 135.7452177,
+    spendTime: 80,
+  },
+  {
+    id: 7,
+    name: "下鴨神社",
+    imgUrl:
+      "https://www.img-ikyu.com/contents/dg/special/kankou/area/kyoto/spot10.jpg?auto=compress,format&fit=crop&w=650&h=450&lossless=0",
+    lat: 35.0389822,
+    lng: 135.7708181,
+    spendTime: 90,
+  },
+  {
+    id: 8,
+    name: "北野天満宮",
+    imgUrl:
+      "https://www.img-ikyu.com/contents/dg/special/kankou/mapple/26010042_00020.jpg?auto=compress,format&fit=crop&w=650&h=450&lossless=0",
+    lat: 35.0311737,
+    lng: 135.7001038,
+    spendTime: 90,
+  },
+  {
+    id: 9,
+    name: "三十三間堂",
+    imgUrl:
+      "https://www.img-ikyu.com/contents/dg/special/kankou/spot/3517_origin.jpg?auto=compress,format&fit=crop&w=650&h=450&lossless=0",
+    lat: 34.9878889,
+    lng: 135.7695239,
+    spendTime: 40,
+  },
 ];
