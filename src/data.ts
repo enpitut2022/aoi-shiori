@@ -4,6 +4,7 @@ export type Spot = {
   imgUrl: string;
   lat: number;
   lng: number;
+  spendTime: number;
 };
 
 export const data: Spot[] = [
@@ -14,6 +15,7 @@ export const data: Spot[] = [
       "https://s3-ap-northeast-1.amazonaws.com/thegate/2021/05/19/10/51/59/Kiyomizudera_Temple_Title.jpg",
     lat: 34.9948282,
     lng: 135.7848819,
+    spendTime: 30,
   },
   {
     id: 1,
@@ -22,6 +24,7 @@ export const data: Spot[] = [
       "https://kyoto-meguru.com/wp-content/uploads/2021/01/DC_18273645.jpg",
     lat: 34.9963463,
     lng: 135.7786888,
+    spendTime: 10,
   },
   {
     id: 2,
@@ -30,6 +33,7 @@ export const data: Spot[] = [
       "https://rimage.gnst.jp/gurutabi.gnavi.co.jp/image/public/img/article/c7/42/art002448/article_art002448_og_facebook.jpg?1617699002",
     lat: 34.9963679,
     lng: 135.7721227,
+    spendTime: 80,
   },
   {
     id: 3,
@@ -37,6 +41,7 @@ export const data: Spot[] = [
     imgUrl: "https://souda-kyoto.jp/blog/ea410e000000c9rx-img/2.jpg",
     lat: 34.9681706,
     lng: 135.7686752,
+    spendTime: 40,
   },
   {
     id: 4,
@@ -45,6 +50,8 @@ export const data: Spot[] = [
       "https://s3-ap-northeast-1.amazonaws.com/thegate/2021/03/29/19/44/10/Kinkakuji_Temple_Sharidenn.jpg",
     lat: 35.0394312,
     lng: 135.7292082,
+    spendTime: 70,
+
   },
   {
     id: 5,
@@ -53,5 +60,6 @@ export const data: Spot[] = [
       "https://www.shokoku-ji.jp/wp-content/themes/shokokuji/assets/img/og/ginkakuji.jpg",
     lat: 35.0264048,
     lng: 135.7981652,
+    spendTime: 100,
   },
 ];
