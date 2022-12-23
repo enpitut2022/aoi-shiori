@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
-// import { updateDistance } from "./utils";
 
 type Props = Spot;
 
@@ -29,7 +28,6 @@ const SpotCards = () => {
     spots: data.slice(0, 3),
     candidate: data.slice(3),
   });
-  const [distance, setDistance] = useState<string[]>(["徒歩5分", "徒歩5分"]);
 
   const applyDrag = <T,>(arr: T[], dragResult: DropResult): T[] => {
     const { removedIndex, addedIndex, payload } = dragResult;
@@ -73,10 +71,6 @@ const SpotCards = () => {
         };
       });
     }
-
-    // setDistance(() => {
-    //   return updateDistance(notUndefined(datas.spots));
-    // });
   };
 
   const getCardPayload = (columnName: string, index: number): Spot => {
