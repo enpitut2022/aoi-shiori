@@ -6,6 +6,16 @@ export type Spot = {
   lng: number;
 };
 
+export const isSpot = (x: unknown): x is Spot => {
+	if (typeof (x as Spot).id !== 'number') return false;
+	if (typeof (x as Spot).name !== 'string') return false;
+	if (typeof (x as Spot).imgUrl !== 'string') return false;
+	if (typeof (x as Spot).lat !== 'number') return false;
+	if (typeof (x as Spot).lng !== 'number') return false;
+
+	return true;
+};
+
 export const data: Spot[] = [
   {
     id: 0,
