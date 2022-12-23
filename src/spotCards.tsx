@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
+import { updateDistance } from './utils'
 
 type Props = Spot;
 
@@ -65,10 +66,12 @@ const SpotCards = () => {
 
     if (columnName === "spots") {
       setDatas((old): Data => {
-        const newSpots = applyDrag(notUndefined(old.spots), e);
+        const newSpots = applyDrag(notUndefined(old.spots), e).filter(isSpot);
+        const newDistance = updateDistance(newSpots);
+        const newSpotAndDistances = concatSpotAndDistance(newSpots, newDistance);
 
         return {
-          spots: newSpots,
+          spots: newSpotAndDistances,
           candidate: notUndefined(old.candidate),
         };
       });
@@ -99,6 +102,16 @@ const SpotCards = () => {
       </Draggable>
     );
   };
+
+  const concatSpotAndDistance = (spots: Spot[], distance: string[]): SpotAndDistance[] => {
+    const res: SpotAndDistance[] = [];
+    for (let i = 0; i < distance.length; i++) {
+      res.push(spots[i]);
+      res.push(distance[i]);
+    }
+    res.push(spots[spots.length - 1]);
+    return res
+  }
 
   return (
     <>
