@@ -11,7 +11,7 @@ const DistanceBlock = (props: Props) => {
         <p>{props.distance}</p>
       </div>
     </>
-  )
+  );
 };
 
 export default DistanceBlock;
