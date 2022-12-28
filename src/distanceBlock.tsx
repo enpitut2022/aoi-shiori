@@ -6,12 +6,12 @@ type Props = {
 const DistanceBlock = (props: Props) => {
   return (
     <>
-      <div style={{ color: 'black' }}>
+      <div className="dist-block">
         <p>➡️</p>
         <p>{props.distance}</p>
       </div>
     </>
-  )
+  );
 };
 
 export default DistanceBlock;
