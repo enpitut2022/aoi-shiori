@@ -17,7 +17,7 @@ function App() {
         <img src={logo_onlyname} />
       </div>
 
-      <MapContainer id="map" center={pos} zoom={13} scrollWheelZoom={false}>
+      {/* <MapContainer id="map" center={pos} zoom={13} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -27,7 +27,7 @@ function App() {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-      </MapContainer>
+      </MapContainer> */}
 
       <div>
         <SpotCards />

@@ -65,6 +65,6 @@
 /* React Leafletライブラリで地図を表示するコンポーネントは height を指定しないと表示されない */
 /* 参考: https://react-leaflet.js.org/docs/start-setup/ */
 #map {
-	height: 600px;
-	width: 600px;
+	height: 300px;
+	width: 300px;
 }
