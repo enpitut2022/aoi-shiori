@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
+import Kyoto_map from "./map";
 import { updateDistance } from './utils'
 
 type Props = Spot;
@@ -129,6 +130,12 @@ const SpotCards = () => {
               genSpotAndDistance(data)
             )}
           </Container>
+        </div>
+
+        <div>
+          {/* 地図を表示するボックス */}
+          <Kyoto_map />
+
         </div>
 
         {/* 候補を格納するボックス */}
