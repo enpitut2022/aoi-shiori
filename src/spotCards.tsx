@@ -3,7 +3,7 @@ import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
 import Kyoto_map from "./map";
-import { updateDistance } from './utils'
+import { updateDistance } from "./utils";
 
 type Props = Spot;
 
@@ -70,7 +70,10 @@ const SpotCards = () => {
       setDatas((old): Data => {
         const newSpots = applyDrag(notUndefined(old.spots), e).filter(isSpot);
         const newDistance = updateDistance(newSpots);
-        const newSpotAndDistances = concatSpotAndDistance(newSpots, newDistance);
+        const newSpotAndDistances = concatSpotAndDistance(
+          newSpots,
+          newDistance
+        );
 
         return {
           spots: newSpotAndDistances,
@@ -86,8 +89,8 @@ const SpotCards = () => {
     const res = datas.spots[index];
     if (isSpot(res)) return res;
 
-    console.error({ res })
-    throw `invalid payload ${res}`
+    console.error({ res });
+    throw `invalid payload ${res}`;
   };
 
   const genSpotAndDistance = (data: Spot | string) => {
@@ -105,37 +108,32 @@ const SpotCards = () => {
     );
   };
 
-  const concatSpotAndDistance = (spots: Spot[], distance: string[]): SpotAndDistance[] => {
+  const concatSpotAndDistance = (
+    spots: Spot[],
+    distance: string[]
+  ): SpotAndDistance[] => {
     const res: SpotAndDistance[] = [];
     for (let i = 0; i < distance.length; i++) {
       res.push(spots[i]);
       res.push(distance[i]);
     }
     res.push(spots[spots.length - 1]);
-    return res
-  }
+    return res;
+  };
 
   return (
-    <>
-      <div>
+    <div className="card_n_map">
+      <div className="cards">
         {/* 旅程を格納するボックス */}
-        <div>
+        <div className="spots">
           <Container
             groupName="shiori"
             orientation="horizontal"
             getChildPayload={(index) => getCardPayload("spots", index)}
             onDrop={(e) => onDropHandler("spots", e)}
           >
-            {datas.spots.map((data) =>
-              genSpotAndDistance(data)
-            )}
+            {datas.spots.map((data) => genSpotAndDistance(data))}
           </Container>
-        </div>
-
-        <div>
-          {/* 地図を表示するボックス */}
-          <Kyoto_map />
-
         </div>
 
         {/* 候補を格納するボックス */}
@@ -153,8 +151,13 @@ const SpotCards = () => {
             ))}
           </Container>
         </div>
+
       </div>
-    </>
+        <div>
+          {/* 地図を表示するボックス */}
+          <Kyoto_map />
+        </div>
+    </div>
   );
 };
 

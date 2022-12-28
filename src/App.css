@@ -52,8 +52,27 @@
   background-color: white;
 }
 
+.card_n_map {
+  display: flex;
+  align-items: center;
+}
+
+.cards {
+  width: 75vw;
+}
+
 .column {
   display: flex;
+}
+
+.spots {
+  width: 75vw;
+  overflow: scroll;
+}
+
+.candidate {
+  width: 75vw;
+  overflow: scroll;
 }
 
 .timeLine {
