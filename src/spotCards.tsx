@@ -1,24 +1,27 @@
 import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
-import { data, Spot } from "./data";
+import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
-import { updateDistance } from "./utils";
+import { updateDistance } from './utils'
 
 type Props = Spot;
 
 const SpotCard = (props: Props) => {
   return (
     <>
-      <div className="card">
+      <div>
         <p>{props.name}</p>
+        <p>{props.spendTime}分</p>
         <img src={props.imgUrl} alt="" />
       </div>
     </>
   );
 };
 
+type SpotAndDistance = Spot | string;
+
 type Data = {
-  spots: Spot[];
+  spots: SpotAndDistance[];
   candidate: Spot[];
 };
 
@@ -27,7 +30,6 @@ const SpotCards = () => {
     spots: data.slice(0, 3),
     candidate: data.slice(3),
   });
-  const [distance, setDistance] = useState<string[]>(["徒歩5分", "徒歩5分"]);
 
   const applyDrag = <T,>(arr: T[], dragResult: DropResult): T[] => {
     const { removedIndex, addedIndex, payload } = dragResult;
@@ -54,15 +56,6 @@ const SpotCards = () => {
 
   // ドロップされたときにspotの順番を更新する
   const onDropHandler = (columnName: string, e: DropResult) => {
-    if (columnName === "spots") {
-      setDatas((old): Data => {
-        return {
-          spots: applyDrag(notUndefined(old.spots), e),
-          candidate: notUndefined(old.candidate),
-        };
-      });
-    }
-
     if (columnName === "candidate") {
       setDatas((old): Data => {
         return {
@@ -72,13 +65,28 @@ const SpotCards = () => {
       });
     }
 
-    setDistance(() => {
-      return updateDistance(notUndefined(datas.spots));
-    });
+    if (columnName === "spots") {
+      setDatas((old): Data => {
+        const newSpots = applyDrag(notUndefined(old.spots), e).filter(isSpot);
+        const newDistance = updateDistance(newSpots);
+        const newSpotAndDistances = concatSpotAndDistance(newSpots, newDistance);
+
+        return {
+          spots: newSpotAndDistances,
+          candidate: notUndefined(old.candidate),
+        };
+      });
+    }
   };
 
   const getCardPayload = (columnName: string, index: number): Spot => {
-    return columnName === "spots" ? datas.spots[index] : datas.candidate[index];
+    if (columnName === "candidate") return datas.candidate[index];
+
+    const res = datas.spots[index];
+    if (isSpot(res)) return res;
+
+    console.error({ res })
+    throw `invalid payload ${res}`
   };
 
   const genSpotAndDistance = (data: Spot | string) => {
@@ -96,18 +104,15 @@ const SpotCards = () => {
     );
   };
 
-  const cncatSpotAndDistance = (
-    spots: Spot[],
-    distance: string[]
-  ): (Spot | string)[] => {
-    let res: (Spot | string)[] = [];
+  const concatSpotAndDistance = (spots: Spot[], distance: string[]): SpotAndDistance[] => {
+    const res: SpotAndDistance[] = [];
     for (let i = 0; i < distance.length; i++) {
       res.push(spots[i]);
       res.push(distance[i]);
     }
     res.push(spots[spots.length - 1]);
-    return res;
-  };
+    return res
+  }
 
   return (
     <>
@@ -120,7 +125,7 @@ const SpotCards = () => {
             getChildPayload={(index) => getCardPayload("spots", index)}
             onDrop={(e) => onDropHandler("spots", e)}
           >
-            {cncatSpotAndDistance(datas.spots, distance).map((data) =>
+            {datas.spots.map((data) =>
               genSpotAndDistance(data)
             )}
           </Container>
