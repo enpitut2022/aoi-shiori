@@ -62,6 +62,11 @@
   flex-direction: column;
 }
 
+.spot_n_map {
+  display: flex;
+  align-items: center;
+}
+
 .spots {
   width: 75vw;
   overflow: scroll;

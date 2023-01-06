@@ -129,20 +129,41 @@ const SpotCards = () => {
 
   return (
     <>
-      <div>
-        {/* 旅程を格納するボックス */}
-        <div className="spots">
-          <div>
-            <p>プラン</p>
+      <div className="spot_n_map">
+        <div>
+          {/* 旅程を格納するボックス */}
+          <div className="spots">
+            <div>
+              <p>プラン</p>
+            </div>
+            <Container
+              groupName="shiori"
+              orientation="horizontal"
+              getChildPayload={(index) => getCardPayload("spots", index)}
+              onDrop={(e) => onDropHandler("spots", e)}
+            >
+              {datas.spots.map((data) => genSpotAndDistance(data))}
+            </Container>
           </div>
-          <Container
-            groupName="shiori"
-            orientation="horizontal"
-            getChildPayload={(index) => getCardPayload("spots", index)}
-            onDrop={(e) => onDropHandler("spots", e)}
-          >
-            {datas.spots.map((data) => genSpotAndDistance(data))}
-          </Container>
+
+          {/* 候補を格納するボックス */}
+          <div className="candidate">
+            <div>
+              <p>追加候補</p>
+            </div>
+            <Container
+              groupName="shiori"
+              orientation="horizontal"
+              getChildPayload={(index) => getCardPayload("candidate", index)}
+              onDrop={(e) => onDropHandler("candidate", e)}
+            >
+              {notUndefined(datas.candidate).map((spot) => (
+                <Draggable key={Math.floor(Math.random() * 99999)}>
+                  <SpotCard {...spot} />
+                </Draggable>
+              ))}
+            </Container>
+          </div>
         </div>
 
         {/* 地図 */}
@@ -160,26 +181,8 @@ const SpotCards = () => {
             return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
           })}
         </MapContainer>
-
-        {/* 候補を格納するボックス */}
-        <div className="candidate">
-          <div>
-            <p>追加候補</p>
-          </div>
-          <Container
-            groupName="shiori"
-            orientation="horizontal"
-            getChildPayload={(index) => getCardPayload("candidate", index)}
-            onDrop={(e) => onDropHandler("candidate", e)}
-          >
-            {notUndefined(datas.candidate).map((spot) => (
-              <Draggable key={Math.floor(Math.random() * 99999)}>
-                <SpotCard {...spot} />
-              </Draggable>
-            ))}
-          </Container>
-        </div>
       </div>
+      <div></div>
     </>
   );
 };
