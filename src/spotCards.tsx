@@ -118,6 +118,32 @@ const SpotCards = () => {
 
   const convertToLatLng = (spot: Spot): LatLngExpression => [spot.lat, spot.lng];
 
+  const displayMap = () => {
+    if (datas.spots[0] != undefined){
+      console.log(datas.spots)
+      return (
+        <MapContainer id="map" center={convertToLatLng(datas.spots[0] as Spot)} zoom={13} scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {
+            datas.spots.filter(isSpot).map((spot) => {
+              return (
+                <Marker position={convertToLatLng(spot as Spot)}>
+                </Marker>
+              )
+            })
+          }
+        </MapContainer>
+        );
+      } else {
+        return (
+          <p>地図が表示されるよ</p>
+        );
+      }
+    }
+
   return (
     <>
       <div>
@@ -136,20 +162,7 @@ const SpotCards = () => {
         </div>
 
         {/* 地図 */}
-        <MapContainer id="map" center={convertToLatLng(datas.spots[0] as Spot)} zoom={13} scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {
-            datas.spots.filter(isSpot).map((spot) => {
-              return (
-                <Marker position={convertToLatLng(spot as Spot)}>
-                </Marker>
-              )
-            })
-          }
-        </MapContainer>
+        {displayMap()}
 
         {/* 候補を格納するボックス */}
         <div className="candidate">
