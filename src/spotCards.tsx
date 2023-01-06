@@ -3,6 +3,8 @@ import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
 import { updateDistance } from './utils'
+import { LatLngExpression } from 'leaflet'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 type Props = Spot;
 
@@ -114,6 +116,8 @@ const SpotCards = () => {
     return res
   }
 
+  const convertToLatLng = (spot: Spot): LatLngExpression => [spot.lat, spot.lng];
+
   return (
     <>
       <div>
@@ -130,6 +134,22 @@ const SpotCards = () => {
             )}
           </Container>
         </div>
+
+        {/* 地図 */}
+        <MapContainer id="map" center={convertToLatLng(datas.spots[0] as Spot)} zoom={13} scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {
+            datas.spots.filter(isSpot).map((spot) => {
+              return (
+                <Marker position={convertToLatLng(spot as Spot)}>
+                </Marker>
+              )
+            })
+          }
+        </MapContainer>
 
         {/* 候補を格納するボックス */}
         <div className="candidate">
