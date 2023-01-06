@@ -123,6 +123,9 @@ const SpotCards = () => {
       <div>
         {/* 旅程を格納するボックス */}
         <div>
+          <div>
+            <p>プラン</p>
+          </div>
           <Container
             groupName="shiori"
             orientation="horizontal"
@@ -153,6 +156,9 @@ const SpotCards = () => {
 
         {/* 候補を格納するボックス */}
         <div className="candidate">
+          <div>
+            <p>追加候補</p>
+          </div>
           <Container
             groupName="shiori"
             orientation="horizontal"
