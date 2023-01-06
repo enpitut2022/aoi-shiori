@@ -68,3 +68,13 @@
 	height: 300px;
 	width: 300px;
 }
+
+.candidate {
+	min-width: 40vw;
+	min-height: 300px;
+}
+
+.smooth-dnd-container.horizontal {
+	min-width: 40vw;
+	min-height: 328px;
+}
