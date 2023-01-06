@@ -2,18 +2,18 @@ import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
-import { updateDistance } from './utils'
-import { LatLngExpression } from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { updateDistance } from "./utils";
+import { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 type Props = Spot;
 
 const SpotCard = (props: Props) => {
   return (
     <>
-      <div>
+      <div className="card">
         <p>{props.name}</p>
-        <p>{props.spendTime}分</p>
+        <p>{props.spendTime}分滞在</p>
         <img src={props.imgUrl} alt="" />
       </div>
     </>
@@ -71,7 +71,10 @@ const SpotCards = () => {
       setDatas((old): Data => {
         const newSpots = applyDrag(notUndefined(old.spots), e).filter(isSpot);
         const newDistance = updateDistance(newSpots);
-        const newSpotAndDistances = concatSpotAndDistance(newSpots, newDistance);
+        const newSpotAndDistances = concatSpotAndDistance(
+          newSpots,
+          newDistance
+        );
 
         return {
           spots: newSpotAndDistances,
@@ -87,8 +90,8 @@ const SpotCards = () => {
     const res = datas.spots[index];
     if (isSpot(res)) return res;
 
-    console.error({ res })
-    throw `invalid payload ${res}`
+    console.error({ res });
+    throw `invalid payload ${res}`;
   };
 
   const genSpotAndDistance = (data: Spot | string) => {
@@ -106,67 +109,81 @@ const SpotCards = () => {
     );
   };
 
-  const concatSpotAndDistance = (spots: Spot[], distance: string[]): SpotAndDistance[] => {
+  const concatSpotAndDistance = (
+    spots: Spot[],
+    distance: string[]
+  ): SpotAndDistance[] => {
     const res: SpotAndDistance[] = [];
     for (let i = 0; i < distance.length; i++) {
       res.push(spots[i]);
       res.push(distance[i]);
     }
     res.push(spots[spots.length - 1]);
-    return res
-  }
+    return res;
+  };
 
-  const convertToLatLng = (spot: Spot): LatLngExpression => [spot.lat, spot.lng];
+  const convertToLatLng = (spot: Spot): LatLngExpression => [
+    spot.lat,
+    spot.lng,
+  ];
 
   return (
     <>
-      <div>
-        {/* 旅程を格納するボックス */}
-        <div>
-          <Container
-            groupName="shiori"
-            orientation="horizontal"
-            getChildPayload={(index) => getCardPayload("spots", index)}
-            onDrop={(e) => onDropHandler("spots", e)}
-          >
-            {datas.spots.map((data) =>
-              genSpotAndDistance(data)
-            )}
-          </Container>
-        </div>
+      <div className="spot_n_map">
 
         {/* 地図 */}
-        <MapContainer id="map" center={convertToLatLng(datas.spots[0] as Spot)} zoom={13} scrollWheelZoom={false}>
+        <MapContainer
+          id="map"
+          center={convertToLatLng(datas.spots[0] as Spot)}
+          zoom={13}
+          scrollWheelZoom={false}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {
-            datas.spots.filter(isSpot).map((spot) => {
-              return (
-                <Marker position={convertToLatLng(spot as Spot)}>
-                </Marker>
-              )
-            })
-          }
+          {datas.spots.filter(isSpot).map((spot) => {
+            return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
+          })}
         </MapContainer>
+        <div>
+          {/* 旅程を格納するボックス */}
+          <div className="spots">
+            <div>
+              <p>プラン</p>
+            </div>
+            <Container
+              groupName="shiori"
+              orientation="horizontal"
+              getChildPayload={(index) => getCardPayload("spots", index)}
+              onDrop={(e) => onDropHandler("spots", e)}
+            >
+              {datas.spots.map((data) => genSpotAndDistance(data))}
+            </Container>
+          </div>
 
-        {/* 候補を格納するボックス */}
-        <div className="candidate">
-          <Container
-            groupName="shiori"
-            orientation="horizontal"
-            getChildPayload={(index) => getCardPayload("candidate", index)}
-            onDrop={(e) => onDropHandler("candidate", e)}
-          >
-            {notUndefined(datas.candidate).map((spot) => (
-              <Draggable key={Math.floor(Math.random() * 99999)}>
-                <SpotCard {...spot} />
-              </Draggable>
-            ))}
-          </Container>
+          {/* 候補を格納するボックス */}
+          <div className="candidate">
+            <div>
+              <p>追加候補</p>
+            </div>
+            <Container
+              groupName="shiori"
+              orientation="horizontal"
+              getChildPayload={(index) => getCardPayload("candidate", index)}
+              onDrop={(e) => onDropHandler("candidate", e)}
+            >
+              {notUndefined(datas.candidate).map((spot) => (
+                <Draggable key={Math.floor(Math.random() * 99999)}>
+                  <SpotCard {...spot} />
+                </Draggable>
+              ))}
+            </Container>
+          </div>
         </div>
+
       </div>
+      <div></div>
     </>
   );
 };
