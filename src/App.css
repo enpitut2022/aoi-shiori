@@ -1,80 +1,85 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
 }
 
 .logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: scale(0.7);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: scale(0.7);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+	a:nth-of-type(2) .logo {
+		animation: logo-spin infinite 20s linear;
+	}
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
-    color: #fff;
-  }
+	body {
+		color: #fff;
+	}
 
-  .card {
-    color: black;
-  }
+	.card {
+		color: black;
+	}
 }
 
 .card {
-  padding: 2em;
+	padding: 2em;
 }
 
 .read-the-docs {
-  color: #888;
+	color: #888;
 }
 
 .card {
-  border: black 1px solid;
-  border-radius: 5px;
-  margin: 10px 0;
-  background-color: white;
+	border: black 1px solid;
+	border-radius: 5px;
+	margin: 10px 0;
+	background-color: white;
 }
 
 .column {
-  display: flex;
+	display: flex;
 }
 
 .timeLine {
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
+}
+
+.spot_n_map {
+	display: flex;
+	align-items: center;
+}
+
+.spots {
+	width: 50vw;
+	overflow: scroll;
+}
+
+.candidate {
+	width: 50vw;
+	overflow: scroll;
 }
 
 /* React Leafletライブラリで地図を表示するコンポーネントは height を指定しないと表示されない */
 /* 参考: https://react-leaflet.js.org/docs/start-setup/ */
 #map {
-  height: 300px;
-  width: 300px;
-}
-
-.candidate {
-  min-width: 40vw;
-  min-height: 300px;
-}
-
-.smooth-dnd-container.horizontal {
-  min-width: 40vw;
-  min-height: 328px;
+	height: 50vw;
+	width: 50vw;
 }
