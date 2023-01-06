@@ -27,7 +27,7 @@ const pickColor = () => {
 const SpotCard = (props: Props) => {
   return (
     <>
-      <div className="card">
+      <div className="card" style={{background: pickColor()}}>
         <p>{props.name}</p>
         <p>{props.spendTime}分滞在</p>
         <img src={props.imgUrl} alt="" />
