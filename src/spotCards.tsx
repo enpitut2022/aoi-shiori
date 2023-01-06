@@ -138,9 +138,21 @@ const SpotCards = () => {
         </MapContainer>
         );
       } else {
-        return (
-          <p>地図が表示されるよ</p>
-        );
+        if (notUndefined(datas.candidate).length > 0) {
+          return (
+            <MapContainer id="map" center={convertToLatLng(datas.candidate[0] as Spot)} zoom={13} scrollWheelZoom={false}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={convertToLatLng(datas.candidate[0] as Spot)}></Marker>
+          </MapContainer>
+          )
+        } else {
+          return (
+            <p>地図が表示されるよ</p>
+          );
+        }
       }
     }
 
