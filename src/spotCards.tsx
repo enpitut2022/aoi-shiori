@@ -130,6 +130,22 @@ const SpotCards = () => {
   return (
     <>
       <div className="spot_n_map">
+
+        {/* 地図 */}
+        <MapContainer
+          id="map"
+          center={convertToLatLng(datas.spots[0] as Spot)}
+          zoom={13}
+          scrollWheelZoom={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {datas.spots.filter(isSpot).map((spot) => {
+            return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
+          })}
+        </MapContainer>
         <div>
           {/* 旅程を格納するボックス */}
           <div className="spots">
@@ -166,21 +182,6 @@ const SpotCards = () => {
           </div>
         </div>
 
-        {/* 地図 */}
-        <MapContainer
-          id="map"
-          center={convertToLatLng(datas.spots[0] as Spot)}
-          zoom={13}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {datas.spots.filter(isSpot).map((spot) => {
-            return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
-          })}
-        </MapContainer>
       </div>
       <div></div>
     </>
