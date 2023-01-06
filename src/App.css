@@ -68,18 +68,18 @@
 }
 
 .spots {
-  width: 75vw;
+  width: 50vw;
   overflow: scroll;
 }
 
 .candidate {
-  width: 75vw;
+  width: 50vw;
   overflow: scroll;
 }
 
 /* React Leafletライブラリで地図を表示するコンポーネントは height を指定しないと表示されない */
 /* 参考: https://react-leaflet.js.org/docs/start-setup/ */
 #map {
-  height: 300px;
-  width: 300px;
+  height: 50vw;
+  width: 50vw;
 }
