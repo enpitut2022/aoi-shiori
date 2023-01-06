@@ -8,6 +8,22 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 type Props = Spot;
 
+const cardColors = [
+	'azure',
+	'beige',
+	'bisque',
+	'blanchedalmond',
+	'burlywood',
+	'cornsilk',
+	'gainsboro',
+	'ghostwhite',
+	'ivory',
+];
+const pickColor = () => {
+	let rand = Math.floor(Math.random() * 10);
+	return cardColors[rand];
+};
+
 const SpotCard = (props: Props) => {
   return (
     <>
