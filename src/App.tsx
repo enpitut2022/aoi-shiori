@@ -4,8 +4,8 @@ import SpotCards from "./spotCards";
 import Cards from "./cards";
 import logo_noname from "./assets/logo_noname.png";
 import logo_onlyname from "./assets/logo_onlyname.png";
-import { LatLngExpression } from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 function App() {
   const pos: LatLngExpression = [34.9948282, 135.7848819];

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
-import { updateDistance } from './utils'
-import { LatLngExpression } from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { updateDistance } from "./utils";
+import { LatLngExpression } from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 type Props = Spot;
 
@@ -71,7 +71,10 @@ const SpotCards = () => {
       setDatas((old): Data => {
         const newSpots = applyDrag(notUndefined(old.spots), e).filter(isSpot);
         const newDistance = updateDistance(newSpots);
-        const newSpotAndDistances = concatSpotAndDistance(newSpots, newDistance);
+        const newSpotAndDistances = concatSpotAndDistance(
+          newSpots,
+          newDistance
+        );
 
         return {
           spots: newSpotAndDistances,
@@ -87,8 +90,8 @@ const SpotCards = () => {
     const res = datas.spots[index];
     if (isSpot(res)) return res;
 
-    console.error({ res })
-    throw `invalid payload ${res}`
+    console.error({ res });
+    throw `invalid payload ${res}`;
   };
 
   const genSpotAndDistance = (data: Spot | string) => {
@@ -106,55 +109,69 @@ const SpotCards = () => {
     );
   };
 
-  const concatSpotAndDistance = (spots: Spot[], distance: string[]): SpotAndDistance[] => {
+  const concatSpotAndDistance = (
+    spots: Spot[],
+    distance: string[]
+  ): SpotAndDistance[] => {
     const res: SpotAndDistance[] = [];
     for (let i = 0; i < distance.length; i++) {
       res.push(spots[i]);
       res.push(distance[i]);
     }
     res.push(spots[spots.length - 1]);
-    return res
-  }
+    return res;
+  };
 
-  const convertToLatLng = (spot: Spot): LatLngExpression => [spot.lat, spot.lng];
+  const convertToLatLng = (spot: Spot): LatLngExpression => [
+    spot.lat,
+    spot.lng,
+  ];
 
+  // マップを表示
   const displayMap = () => {
-    if (notUndefined(datas.spots).length > 0){
-      console.log(datas.spots)
+    // プランに観光地があれば, 地図にピンを立てる
+    if (notUndefined(datas.spots).length > 0) {
       return (
-        <MapContainer id="map" center={convertToLatLng(datas.spots[0] as Spot)} zoom={13} scrollWheelZoom={false}>
+        <MapContainer
+          id="map"
+          center={convertToLatLng(datas.spots[0] as Spot)}
+          zoom={13}
+          scrollWheelZoom={false}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {
-            datas.spots.filter(isSpot).map((spot) => {
-              return (
-                <Marker position={convertToLatLng(spot as Spot)}>
-                </Marker>
-              )
-            })
-          }
+          {datas.spots.filter(isSpot).map((spot) => {
+            return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
+          })}
         </MapContainer>
-        );
-      } else {
-        if (notUndefined(datas.candidate).length > 0) {
-          return (
-            <MapContainer id="map" center={convertToLatLng(datas.candidate[0] as Spot)} zoom={13} scrollWheelZoom={false}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={convertToLatLng(datas.candidate[0] as Spot)}></Marker>
-          </MapContainer>
-          )
-        } else {
-          return (
-            <p>地図が表示されるよ</p>
-          );
-        }
-      }
+      );
     }
+
+    // プランに観光地がない場合, 候補の先頭の観光地を中心とした地図を表示
+    if (notUndefined(datas.candidate).length > 0) {
+      return (
+        <MapContainer
+          id="map"
+          center={convertToLatLng(notUndefined(datas.candidate)[0] as Spot)}
+          zoom={13}
+          scrollWheelZoom={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker
+            position={convertToLatLng(notUndefined(datas.candidate)[0] as Spot)}
+          ></Marker>
+        </MapContainer>
+      );
+    }
+
+    // プランにも候補にも観光地がない場合, たどり着いたらおかしい
+    return <p>地図が表示されるよ</p>;
+  };
 
   return (
     <>
@@ -167,9 +184,7 @@ const SpotCards = () => {
             getChildPayload={(index) => getCardPayload("spots", index)}
             onDrop={(e) => onDropHandler("spots", e)}
           >
-            {datas.spots.map((data) =>
-              genSpotAndDistance(data)
-            )}
+            {datas.spots.map((data) => genSpotAndDistance(data))}
           </Container>
         </div>
 

@@ -62,7 +62,6 @@ export const data: Spot[] = [
     lat: 35.0394312,
     lng: 135.7292082,
     spendTime: 70,
-
   },
   {
     id: 5,
