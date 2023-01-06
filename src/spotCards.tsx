@@ -119,7 +119,7 @@ const SpotCards = () => {
   const convertToLatLng = (spot: Spot): LatLngExpression => [spot.lat, spot.lng];
 
   const displayMap = () => {
-    if (datas.spots[0] != undefined){
+    if (notUndefined(datas.spots).length > 0){
       console.log(datas.spots)
       return (
         <MapContainer id="map" center={convertToLatLng(datas.spots[0] as Spot)} zoom={13} scrollWheelZoom={false}>
