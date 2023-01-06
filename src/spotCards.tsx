@@ -3,8 +3,7 @@ import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
 import { updateDistance } from "./utils";
-import { LatLngExpression } from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import DisplayMap from "./map";
 
 type Props = Spot;
 
@@ -122,57 +121,6 @@ const SpotCards = () => {
     return res;
   };
 
-  const convertToLatLng = (spot: Spot): LatLngExpression => [
-    spot.lat,
-    spot.lng,
-  ];
-
-  // マップを表示
-  const displayMap = () => {
-    // プランに観光地があれば, 地図にピンを立てる
-    if (notUndefined(datas.spots).length > 0) {
-      return (
-        <MapContainer
-          id="map"
-          center={convertToLatLng(datas.spots[0] as Spot)}
-          zoom={13}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {datas.spots.filter(isSpot).map((spot) => {
-            return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
-          })}
-        </MapContainer>
-      );
-    }
-
-    // プランに観光地がない場合, 候補の先頭の観光地を中心とした地図を表示
-    if (notUndefined(datas.candidate).length > 0) {
-      return (
-        <MapContainer
-          id="map"
-          center={convertToLatLng(notUndefined(datas.candidate)[0] as Spot)}
-          zoom={13}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker
-            position={convertToLatLng(notUndefined(datas.candidate)[0] as Spot)}
-          ></Marker>
-        </MapContainer>
-      );
-    }
-
-    // プランにも候補にも観光地がない場合, たどり着いたらおかしい
-    return <p>地図が表示されるよ</p>;
-  };
-
   return (
     <>
       <div>
@@ -189,7 +137,10 @@ const SpotCards = () => {
         </div>
 
         {/* 地図 */}
-        {displayMap()}
+        <DisplayMap
+          spots={notUndefined(datas.spots).filter(isSpot)}
+          candidate={notUndefined(datas.candidate)}
+        />
 
         {/* 候補を格納するボックス */}
         <div className="candidate">
