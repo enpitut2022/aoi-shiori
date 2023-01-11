@@ -3,8 +3,7 @@ import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
 import DistanceBlock from "./distanceBlock";
 import { updateDistance } from "./utils";
-import { LatLngExpression } from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import DisplayMap from "./map";
 
 type Props = Spot;
 
@@ -122,30 +121,15 @@ const SpotCards = () => {
     return res;
   };
 
-  const convertToLatLng = (spot: Spot): LatLngExpression => [
-    spot.lat,
-    spot.lng,
-  ];
-
   return (
     <>
       <div className="spot_n_map">
-
         {/* 地図 */}
-        <MapContainer
-          id="map"
-          center={convertToLatLng(datas.spots[0] as Spot)}
-          zoom={13}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {datas.spots.filter(isSpot).map((spot) => {
-            return <Marker position={convertToLatLng(spot as Spot)}></Marker>;
-          })}
-        </MapContainer>
+        <DisplayMap
+          spots={notUndefined(datas.spots).filter(isSpot)}
+          candidate={notUndefined(datas.candidate)}
+        />
+
         <div>
           {/* 旅程を格納するボックス */}
           <div className="spots">
