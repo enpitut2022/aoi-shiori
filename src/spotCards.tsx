@@ -153,7 +153,6 @@ const SpotCards = () => {
             </Container>
           </div>
         </div>
-
       </div>
       <div></div>
     </>

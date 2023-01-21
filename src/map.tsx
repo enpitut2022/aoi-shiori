@@ -1,11 +1,8 @@
-import { Spot, isSpot } from './data'
+import { Spot, isSpot } from "./data";
 import { LatLngExpression } from "leaflet";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
-const convertToLatLng = (spot: Spot): LatLngExpression => [
-  spot.lat,
-  spot.lng,
-];
+const convertToLatLng = (spot: Spot): LatLngExpression => [spot.lat, spot.lng];
 
 type Props = {
   spots: Spot[];
@@ -47,9 +44,7 @@ const DisplayMap = (props: Props) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker
-          position={convertToLatLng(props.candidate[0] as Spot)}
-        ></Marker>
+        <Marker position={convertToLatLng(props.candidate[0] as Spot)}></Marker>
       </MapContainer>
     );
   }
