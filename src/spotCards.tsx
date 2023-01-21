@@ -1,23 +1,11 @@
 import { useState } from "react";
 import { Container, Draggable, DropResult } from "react-smooth-dnd";
 import { data, Spot, isSpot } from "./data";
-import DistanceBlock from "./distanceBlock";
 import { updateDistance } from "./utils";
+
+import DistanceBlock from "./distanceBlock";
 import DisplayMap from "./map";
-
-type Props = Spot;
-
-const SpotCard = (props: Props) => {
-  return (
-    <>
-      <div className="card">
-        <p>{props.name}</p>
-        <p>{props.spendTime}分滞在</p>
-        <img src={props.imgUrl} alt="" />
-      </div>
-    </>
-  );
-};
+import SpotCard from "./spotCard";
 
 type SpotAndDistance = Spot | string;
 
