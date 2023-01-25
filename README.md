@@ -11,7 +11,7 @@
 を実現できます。
 ```
 
-- チーム名：判断が遅い！ズ
+- チーム名：判断が遅い！ズ（仮）
 - サービス名：青い栞
 - miroURL：https://miro.com/app/board/uXjVPOC4uDY=/
 - サービスの URL：https://aoi-shiori.netlify.app/
